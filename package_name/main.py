@@ -3,11 +3,11 @@ class Item:
     pay_rate = 0.8
     all = []
 
-    def __init__(self,name:str,price:int,amount:int):
+    def __init__(self, name: str, price: int, amount: int):
         self.__name = name
         self.price = price
         self.amount = amount
-        Item.all.append(self)
+        self.all.append(self)
 
     def calculate_total_price(self):
         """Возвращает цену товра"""
@@ -36,7 +36,7 @@ class Item:
         if len(value) <= 10:
             self.__name = value
         else:
-            print(f'Exception: Длина наименования товара превышает 10 символов.')
+            raise Exception("Длина наименования товара превышает 10 символов.")
 
     @staticmethod
     def is_integer(num) -> bool:
@@ -46,8 +46,5 @@ class Item:
         return False
 
 
-#item = Item("Смартфон", 10000, 20)
-# Item.instantiate_from_csv()
-# print(len(Item.all))
-# i = Item.all[0]
-#print(Item.is_integer(5.5))
+
+
