@@ -1,3 +1,4 @@
+
 import csv
 class Item:
     pay_rate = 0.8
@@ -45,6 +46,7 @@ class Item:
             return True
         return False
 
-
+# Item.instantiate_from_csv()
+# print(Item.all)
 
 
