@@ -11,9 +11,11 @@ class Item:
         self.all.append(self)
 
     def __repr__(self):
+        """Выводим класс"""
         return f"{self.__class__.__name__}({self.__name}, {self.price}, {self.amount})"
 
     def __str__(self):
+        """Выводим имя"""
         return f"{self.__name}"
 
     def calculate_total_price(self):

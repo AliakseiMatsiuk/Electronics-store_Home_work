@@ -47,5 +47,10 @@ def test_name_length(product_name):
     with pytest.raises(Exception):
         product_name.name = "Длина наименования товара превышает 10 символов."
 
+def test_repr():
+    item = Item("Смартфон", 10000, 20)
+    assert repr(item) == "Item(Смартфон, 10000, 20)"
 
-
+def test_str():
+    item = Item("Смартфон", 10000, 20)
+    assert str(item) == "Смартфон"
