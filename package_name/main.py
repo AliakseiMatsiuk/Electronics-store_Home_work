@@ -1,5 +1,6 @@
-
 import csv
+
+
 class Item:
     pay_rate = 0.8
     all = []
@@ -54,9 +55,38 @@ class Item:
             return True
         return False
 
-# Item.instantiate_from_csv()
-# print(Item.all)
-# item1 = Item("Смартфон", 10000, 20)
-# print(item1)
+    def __add__(self, other):
+        """Слаживаем экземпляры классов"""
+        if isinstance(other, Item):
+            return self.amount + other.amount
 
 
+class Phone(Item):
+
+    def __init__(self, name, price, amount, number_of_sim):
+        """Наследуем и Добовляем метод number_of_sim"""
+        super().__init__(name, price, amount)
+        self.number_of_sim = number_of_sim
+
+    def __repr__(self):
+        """Выводим класс"""
+        return f'{self.__class__.__name__}({self.name}, {self.price}, {self.amount}, {self.number_of_sim})'
+
+    @property
+    def number_of_sim(self):
+        return self._sim
+
+    @number_of_sim.setter
+    def number_of_sim(self, value):
+        """Деоаем проверку на колличество сим-карт"""
+        if value >= 1:
+            self._sim = value
+        else:
+            raise ValueError("Количество физических SIM-карт должно быть целым числом больше нуля.")
+
+
+# phone1 = Phone("iPhone 14", 120_000, 5, 2)
+# item1 = Item("Смартфон", 10_000, 20)
+# phone1.number_of_sim = 2
+# print(repr(phone1))
+# print(item1 + phone1)
