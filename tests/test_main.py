@@ -1,5 +1,5 @@
 import pytest
-from package_name.main import Item, Phone
+from package_name.main import Item, Phone, ClassMixin, KeyBoard
 
 
 def test_init():
@@ -71,3 +71,12 @@ def test_add():
 def test_repr_phone():
     phone = Phone('iPhone 14', 120000, 5, 2)
     assert repr(phone) == "Phone(iPhone 14, 120000, 5, 2)"
+
+def test_ClassMixin():
+    cm = ClassMixin()
+    assert cm.language == "EN"
+    cm.change_lang()
+    assert cm.language == "RU"
+    cm.change_lang()
+    assert cm.language == "EN"
+

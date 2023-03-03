@@ -2,8 +2,8 @@ import csv
 
 
 class Item:
-    pay_rate = 0.8
-    all = []
+    pay_rate = 0.8  # процентная ставка
+    all = []  # все объекты в магазине
 
     def __init__(self, name: str, price: int, amount: int):
         self.__name = name
@@ -74,6 +74,7 @@ class Phone(Item):
 
     @property
     def number_of_sim(self):
+        """Возврощает количество sim"""
         return self._sim
 
     @number_of_sim.setter
@@ -84,9 +85,34 @@ class Phone(Item):
         else:
             raise ValueError("Количество физических SIM-карт должно быть целым числом больше нуля.")
 
+class ClassMixin:
 
-# phone1 = Phone("iPhone 14", 120_000, 5, 2)
-# item1 = Item("Смартфон", 10_000, 20)
-# phone1.number_of_sim = 2
-# print(repr(phone1))
-# print(item1 + phone1)
+    def __init__(self, *args, **kwargs):
+        """Инициализатор атрибута language"""
+        self.__language = "EN"
+        super().__init__(*args, **kwargs)
+
+    @property
+    def language(self):
+        """Возврощает язык клавиатуры"""
+        return self.__language
+
+    def change_lang(self):
+        """Изменяет язык клавиатуры"""
+        if self.language == "EN":
+            self.__language = "RU"
+        elif self.language == "RU":
+            self.__language = "EN"
+
+
+class KeyBoard(ClassMixin, Item):
+    pass
+
+
+kb = KeyBoard('Dark Project KD87A', 9600, 5)
+print(kb)
+print(kb.language)
+kb.change_lang()
+print(kb.language)
+
+
