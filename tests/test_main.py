@@ -1,5 +1,6 @@
 import pytest
-from package_name.main import Item, Phone, ClassMixin, KeyBoard
+import csv
+from package_name.main import Item, Phone, ClassMixin, InstantiateCSVError, KeyBoard
 
 
 def test_init():
@@ -55,6 +56,14 @@ def test_str():
     item = Item("Смартфон", 10000, 20)
     assert str(item) == "Смартфон"
 
+def test_number_of_sim():
+    obj = Phone("Смартфон", 10000, 20, 2)
+    obj.number_of_sim = 2
+    assert obj._sim == 2
+
+    with pytest.raises(ValueError):
+        obj.number_of_sim = -2
+
 def test_phone_init():
     phone = Phone('iPhone', 5000, 1, 3)
     assert phone.name == 'iPhone'
@@ -79,4 +88,11 @@ def test_ClassMixin():
     assert cm.language == "RU"
     cm.change_lang()
     assert cm.language == "EN"
+
+def test_InstantiateCSVError():
+    error = InstantiateCSVError("Some error message")
+    assert str(error) == "Some error message"
+    error = InstantiateCSVError()
+    assert str(error) == "Неизвестная ошибка"
+
 

@@ -1,6 +1,16 @@
 import csv
 
 
+class InstantiateCSVError():
+    """Класс-исключение для ошибок"""
+
+    def __init__(self, *args):
+        self.massage = args[0] if args else "Неизвестная ошибка"
+
+    def __str__(self):
+        return self.massage
+
+
 class Item:
     pay_rate = 0.8  # процентная ставка
     all = []  # все объекты в магазине
@@ -30,10 +40,18 @@ class Item:
     @classmethod
     def instantiate_from_csv(cls):
         """Создаёт новые экзэмпляры из csv файла"""
-        with open("items.csv", "r") as csvfile:
-            reader = csv.DictReader(csvfile, delimiter=',')
-            for row in reader:
-                cls(row['name'], int(row['price']), int(row['quantity']))
+        try:
+            with open("items.csv", "r") as csvfile:
+                reader = csv.DictReader(csvfile, delimiter=',')
+                for row in reader:
+                    if list(row.keys()) == ["name", 'price', "quantity"]:
+                        cls(row['name'], int(row['price']), int(row['quantity']))
+                    else:
+                        raise InstantiateCSVError
+        except FileNotFoundError:
+            print(f"Отсутствует файл items.csv ")
+        except InstantiateCSVError:
+            print("Файл items.csv поврежден")
 
     @property
     def name(self):
@@ -85,6 +103,7 @@ class Phone(Item):
         else:
             raise ValueError("Количество физических SIM-карт должно быть целым числом больше нуля.")
 
+
 class ClassMixin:
 
     def __init__(self, *args, **kwargs):
@@ -109,10 +128,4 @@ class KeyBoard(ClassMixin, Item):
     pass
 
 
-kb = KeyBoard('Dark Project KD87A', 9600, 5)
-print(kb)
-print(kb.language)
-kb.change_lang()
-print(kb.language)
-
-
+Item.instantiate_from_csv()
